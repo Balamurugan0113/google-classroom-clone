@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="card">
+    <h2><i class="fas fa-user-graduate"></i> Welcome, {{ current_user.username }}</h2>
+
+    <h3>Your Classes</h3>
+    <ul class="class-list">
+        {% for cls in classes %}
+            <li>
+                <strong>{{ cls.name }}</strong> <span class="code">[{{ cls.join_code }}]</span>
+            </li>
+        {% else %}
+            <li>You have not joined any classes.</li>
+        {% endfor %}
+    </ul>
+    <h3>Assignments</h3>
+    <ul class="assignment-list">
+        {% for a in assignments %}
+            <li><a href="{{ url_for('uploaded_file', filename=a.filename) }}" target="_blank">
+                <i class="fas fa-file-alt"></i> {{ a.filename }}
+            </a></li>
+        {% else %}
+            <li>No assignments uploaded yet.</li>
+        {% endfor %}
+    </ul>
+    <form method="post" action="{{ url_for('join_class') }}">
+        <input type="text" name="code" placeholder="Enter class join code" required />
+        <button type="submit" class="btn-animated">Join Class</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Teacher Dashboard{% endblock %}
+{% block content %}
+<div class="card">
+    <h2><i class="fas fa-chalkboard-teacher"></i> Welcome, {{ current_user.username }}</h2>
+
+    <h3>Your Classes</h3>
+    <ul class="class-list">
+        {% for cls in classes %}
+            <li>
+                <strong>{{ cls.name }}</strong> <span class="code">[{{ cls.join_code }}]</span>
+                <form method="post" action="{{ url_for('upload', class_id=cls.id) }}" enctype="multipart/form-data">
+                    <input type="file" name="file" required />
+                    <button type="submit" class="btn-animated">Upload Assignment</button>
+                </form>
+            </li>
+        {% else %}
+            <li>No classes created yet.</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post" action="{{ url_for('create_class') }}">
+        <input type="text" name="classname" placeholder="Enter class name" required />
+        <button type="submit" class="btn-animated">Create Class</button>
+    </form>
+</div>
+{% endblock %}
