@@ -1,1 +1,1 @@
-web: gunicorn app:INFO_CLASSROOM
+web: gunicorn app:app
